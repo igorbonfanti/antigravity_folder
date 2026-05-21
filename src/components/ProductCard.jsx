@@ -1,0 +1,63 @@
+import React from 'react';
+import { Share2, FileText, ChevronRight } from 'lucide-react';
+
+export function ProductCard({ product, onShare }) {
+  const { nome, cod, categoria, descrizione, varianti, pdf_scheda_tecnica } = product;
+  
+  // Parsing robusto del prezzo
+  const parsePrice = (priceVal) => {
+    if (priceVal === null || priceVal === undefined || priceVal === '') return null;
+    if (typeof priceVal === 'number') return priceVal;
+    const cleaned = String(priceVal).replace(',', '.').trim();
+    const parsed = parseFloat(cleaned);
+    return isNaN(parsed) ? null : parsed;
+  };
+
+  const prices = varianti.map(v => parsePrice(v.prezzo)).filter(v => v !== null);
+  const minPrice = prices.length > 0 ? Math.min(...prices) : null;
+  const um = varianti.length > 0 ? varianti[0].um_conf : '';
+
+  const formatPrice = (val) => {
+    if (val === null || val === undefined) return 'N/D';
+    return val.toLocaleString('it-IT', { minimumFractionDigits: 2, maximumFractionDigits: 3 });
+  };
+
+  return (
+    <div className="product-card">
+      <div className="card-header">
+        <div className="card-title-group">
+          <span className="product-code">{cod}</span>
+          <h3 className="product-name">{nome}</h3>
+          <span className="product-category">{categoria}</span>
+        </div>
+        {pdf_scheda_tecnica && (
+          <a 
+            href={pdf_scheda_tecnica} 
+            target="_blank" 
+            rel="noreferrer" 
+            className="btn-pdf-icon"
+            title="Apri Scheda Tecnica"
+          >
+            <FileText size={20} />
+          </a>
+        )}
+      </div>
+
+      {descrizione && <p className="product-desc">{descrizione}</p>}
+
+      <div className="card-footer">
+        <div className="price-info">
+          <span className="price-label">Prezzo listino da</span>
+          <div className="price-value">
+            {minPrice !== null ? `€ ${formatPrice(minPrice)}` : 'N/D'} <span className="price-um">{um ? `/${um}` : ''}</span>
+          </div>
+        </div>
+        
+        <button className="btn-share" onClick={() => onShare(product)}>
+          <Share2 size={18} />
+          <span>Condividi</span>
+        </button>
+      </div>
+    </div>
+  );
+}

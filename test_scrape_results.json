@@ -1,0 +1,37 @@
+[
+  {
+    "cod": "T00275",
+    "nome": "Keracem Eco",
+    "url": "https://it.kerakoll.com/p/keracem-eco",
+    "pdf": "https://media.kerakoll.com/Sito_Web/security/Hazex/KERACEM%20ECO_8_KKIT_it.pdf",
+    "method": "direct"
+  },
+  {
+    "cod": "T00382",
+    "nome": "Keracem Eco Pronto",
+    "url": "https://it.kerakoll.com/p/keracem-eco-pronto",
+    "pdf": "https://media.kerakoll.com/Sito_Web/techSiteGuide/Italia/Guida_Posa_settembre_2024_psw.pdf",
+    "method": "direct"
+  },
+  {
+    "cod": "T00064",
+    "nome": "Keracem Eco Prontoplus",
+    "url": "https://it.kerakoll.com/p/keracem-eco-prontoplus",
+    "pdf": "https://media.kerakoll.com/Sito_Web/techSiteGuide/Italia/Guida_Posa_Parquet_2025_psw.pdf",
+    "method": "direct"
+  },
+  {
+    "cod": "T00142",
+    "nome": "Rekord Eco Pronto",
+    "url": "https://it.kerakoll.com/p/rekord-eco-pronto",
+    "pdf": "https://media.kerakoll.com/Sito_Web/security/Hazex/REKORD%20ECO%20PRONTO_10_KKIT_it.pdf",
+    "method": "direct"
+  },
+  {
+    "cod": "T00369",
+    "nome": "Massetto Premix",
+    "url": "https://it.kerakoll.com/p/massetto-premix",
+    "pdf": "https://media.kerakoll.com/Sito_Web/security/Hazex/MASSETTO%20PREMIX_3_KKIT_it.pdf",
+    "method": "direct"
+  }
+]
