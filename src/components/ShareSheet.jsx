@@ -97,9 +97,12 @@ export function ShareSheet({ product, isOpen, onClose }) {
       text += `• ${conf} — ${prezzoStr} ${v.euro_um || '€'}\n`;
     });
 
-    const rawLink = product.pdf_scheda_tecnica || product.url_kerakoll || '';
-    const isPdf = !!product.pdf_scheda_tecnica;
-    const label = isPdf ? 'Scheda Tecnica (PDF)' : 'Pagina Prodotto';
+    // Le techSheet Kerakoll richiedono referrer da kerakoll.com — non apribili da link diretto.
+    // In questi casi condividiamo la pagina prodotto, da cui la scheda è scaricabile.
+    const isRestrictedPdf = product.pdf_scheda_tecnica?.includes('/techSheet/');
+    const rawLink = (isRestrictedPdf ? product.url_kerakoll : product.pdf_scheda_tecnica) || product.url_kerakoll || '';
+    const isPdf = !!product.pdf_scheda_tecnica && !isRestrictedPdf;
+    const label = isPdf ? 'Scheda Tecnica (PDF)' : 'Scheda Tecnica su kerakoll.com';
     const icon = isPdf ? '📄' : '🔗';
 
     // For email: use shortened link (if available) directly — no angle brackets needed
@@ -125,7 +128,8 @@ export function ShareSheet({ product, isOpen, onClose }) {
     if (!product) return;
     setEmailLoading(true);
 
-    const rawLink = product.pdf_scheda_tecnica || product.url_kerakoll || '';
+    const isRestrictedPdf = product.pdf_scheda_tecnica?.includes('/techSheet/');
+    const rawLink = (isRestrictedPdf ? product.url_kerakoll : product.pdf_scheda_tecnica) || product.url_kerakoll || '';
     let shortLink = rawLink;
 
     if (rawLink) {
