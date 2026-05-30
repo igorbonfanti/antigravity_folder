@@ -1,14 +1,16 @@
 import React from 'react';
-import { Share2, FileText, ChevronRight } from 'lucide-react';
+import { Share2, FileText, BookOpen, ChevronRight } from 'lucide-react';
 
 export function ProductCard({ product, onShare }) {
-  const { nome, cod, categoria, descrizione, varianti, pdf_scheda_tecnica, url_kerakoll } = product;
+  const { nome, cod, categoria, descrizione, varianti, pdf_scheda_tecnica, pdf_sistema, url_kerakoll } = product;
 
   // techSheet sul CDN Kerakoll richiede referrer da kerakoll.com — apertura diretta dà 403.
   // Per questi link apriamo la pagina prodotto, dove l'utente può scaricare la scheda in contesto corretto.
   const isRestrictedPdf = pdf_scheda_tecnica?.includes('/techSheet/');
   const pdfHref = isRestrictedPdf ? url_kerakoll : pdf_scheda_tecnica;
   const pdfTitle = isRestrictedPdf ? 'Scheda tecnica su kerakoll.com' : 'Apri Scheda Tecnica';
+
+  const sistemaTitle = pdf_sistema?.includes('/brochures/') ? 'Brochure prodotto' : 'Guida di sistema';
   
   // Parsing robusto del prezzo
   const parsePrice = (priceVal) => {
@@ -36,17 +38,30 @@ export function ProductCard({ product, onShare }) {
           <h3 className="product-name">{nome}</h3>
           <span className="product-category">{categoria}</span>
         </div>
-        {pdf_scheda_tecnica && (
-          <a
-            href={pdfHref}
-            target="_blank"
-            rel="noreferrer"
-            className="btn-pdf-icon"
-            title={pdfTitle}
-          >
-            <FileText size={20} />
-          </a>
-        )}
+        <div style={{ display: 'flex', gap: '6px' }}>
+          {pdf_scheda_tecnica && (
+            <a
+              href={pdfHref}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-pdf-icon"
+              title={pdfTitle}
+            >
+              <FileText size={20} />
+            </a>
+          )}
+          {pdf_sistema && (
+            <a
+              href={pdf_sistema}
+              target="_blank"
+              rel="noreferrer"
+              className="btn-pdf-icon"
+              title={sistemaTitle}
+            >
+              <BookOpen size={20} />
+            </a>
+          )}
+        </div>
       </div>
 
       {descrizione && <p className="product-desc">{descrizione}</p>}
