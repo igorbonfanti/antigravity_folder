@@ -2,7 +2,13 @@ import React from 'react';
 import { Share2, FileText, ChevronRight } from 'lucide-react';
 
 export function ProductCard({ product, onShare }) {
-  const { nome, cod, categoria, descrizione, varianti, pdf_scheda_tecnica } = product;
+  const { nome, cod, categoria, descrizione, varianti, pdf_scheda_tecnica, url_kerakoll } = product;
+
+  // techSheet sul CDN Kerakoll richiede referrer da kerakoll.com — apertura diretta dà 403.
+  // Per questi link apriamo la pagina prodotto, dove l'utente può scaricare la scheda in contesto corretto.
+  const isRestrictedPdf = pdf_scheda_tecnica?.includes('/techSheet/');
+  const pdfHref = isRestrictedPdf ? url_kerakoll : pdf_scheda_tecnica;
+  const pdfTitle = isRestrictedPdf ? 'Scheda tecnica su kerakoll.com' : 'Apri Scheda Tecnica';
   
   // Parsing robusto del prezzo
   const parsePrice = (priceVal) => {
@@ -31,12 +37,12 @@ export function ProductCard({ product, onShare }) {
           <span className="product-category">{categoria}</span>
         </div>
         {pdf_scheda_tecnica && (
-          <a 
-            href={pdf_scheda_tecnica} 
-            target="_blank" 
-            rel="noreferrer" 
+          <a
+            href={pdfHref}
+            target="_blank"
+            rel="noreferrer"
             className="btn-pdf-icon"
-            title="Apri Scheda Tecnica"
+            title={pdfTitle}
           >
             <FileText size={20} />
           </a>
